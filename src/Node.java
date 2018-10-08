@@ -39,7 +39,7 @@ public class Node {
             return true;
     }
 
-    public boolean hasSiblings(){//might use this
+    public boolean hasSiblings(){//might use this for traversal
         if(parent.getChildren().size() > 1)
             return true;
         else
@@ -71,5 +71,9 @@ public class Node {
 
     public ArrayList<Node> getChildren(){
         return children;
+    }
+
+    public String toString(){
+        return String.valueOf(value);
     }
 }
