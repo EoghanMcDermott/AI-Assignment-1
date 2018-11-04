@@ -1,14 +1,10 @@
 public class Main {
 
+    public static void main(String[] args)
+    {
+        Tree t = new Tree(3,11,20,40,2);
+        t.buildTree();
 
-     public static void main(String[] args) {
-
-        Node root = new Node(null, 0);
-
-        Tree gameTree = new Tree(root, 2);
-
-        gameTree.buildTree(3);
-
-        System.out.println(gameTree.toString());
+        System.out.println("Total Nodes: " + t.nodeCount());
     }
 }

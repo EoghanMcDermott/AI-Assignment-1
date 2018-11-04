@@ -23,6 +23,7 @@ public class Node {
     private Node parent;
     private ArrayList<Node> children;//using a list so can vary the branching factor of tree
     private int value;
+    private boolean interesting = false;
 
     public Node(Node parent, int value){
         //constructor where you can specify parent node & value
@@ -52,6 +53,21 @@ public class Node {
             this.children.add(newChild);
     }
 
+    public int getHeight(){//recursive function to get a node's height in a tree
+        int height = 0;
+
+        if(getParent() == null)
+            return height;
+        else
+            return 1 + parent.getHeight();
+    }//do i need this?
+
+    public boolean isInteresting() { return interesting; }
+
+    public void makeInteresting() {
+        interesting = true;
+    }
+
     //getters and setters for parent and value
     public void setParent(Node parent){
         this.parent = parent;
@@ -63,17 +79,22 @@ public class Node {
 
     public void setValue(int value){
         this.value = value;
-    }
+    }//can use this to add e+t (?)
 
-    public int getValue() {
-        return value;
-    }
+    public int getValue() { return value;}
 
     public ArrayList<Node> getChildren(){
         return children;
     }
 
-    public String toString(){
-        return String.valueOf(value);
+    public String toString()
+    {
+       String str = "";
+       //str+= "Parent Node: " + parent.toString();
+       str+="\nNode: " + String.valueOf(value);
+       str+="\nChildren: " + children + "\n";
+
+       return str;
     }
+
 }
