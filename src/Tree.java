@@ -95,7 +95,7 @@ public class Tree {
     {
         int depth = 0; //want to reach the horizon
 
-        root = new Node(new Node(null,0), generateValue());
+        root = new Node(null, generateValue());
         //root node has random value between -2500,2500
 
         ArrayList<Node> tempChildren1 = new ArrayList<>();
@@ -137,6 +137,10 @@ public class Tree {
             tempChildren2.clear();//clear out 2nd list so can add to it again
         }
     }
+
+    public int getApprox() {return approx;}
+
+    public Node getRoot(){return root;}
 
     public String nodeCount(){
         return String.valueOf(nodeCount);
