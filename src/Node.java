@@ -53,14 +53,14 @@ public class Node {
             this.children.add(newChild);
     }
 
-    public int getHeight(){//recursive function to get a node's height in a tree
-        int height = 0;
-
-        if(getParent() == null)
-            return height;
-        else
-            return 1 + parent.getHeight();
-    }//do i need this?
+//    public int getHeight(){//recursive function to get a node's height in a tree
+//        int height = 0;
+//
+//        if(getParent() == null)
+//            return height;
+//        else
+//            return 1 + parent.getHeight();
+//    }//do i need this?
 
     public boolean isInteresting() { return interesting; }
 
@@ -69,10 +69,6 @@ public class Node {
     }
 
     //getters and setters for parent and value
-    public void setParent(Node parent){
-        this.parent = parent;
-    }
-
     public Node getParent() {
         return parent;
     }
@@ -87,14 +83,25 @@ public class Node {
         return children;
     }
 
+    private String childrenDetails(){
+
+        String str = "Children: [";
+
+        for(Node child:children)
+            str+=child.value + ",";
+
+        str = str.substring(0,str.length()-1) + "]";
+
+        return str;
+    }
+
     public String toString()
     {
        String str = "";
        //str+= "Parent Node: " + parent.toString();
-       str+="\nNode: " + String.valueOf(value);
-       str+="\nChildren: " + children + "\n";
+       str+="\nNode: " + value;
+       str+="\n" + childrenDetails();
 
        return str;
     }
-
 }

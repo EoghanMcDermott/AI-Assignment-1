@@ -100,31 +100,41 @@ public class Tree {
 
         ArrayList<Node> tempChildren1 = new ArrayList<>();
         ArrayList<Node> tempChildren2 = new ArrayList<>();
-        tempChildren2.add(root);//2nd temp contains just root node initially
+        tempChildren1.add(root);//2nd temp contains just root node initially
         
         while(depth != horizon)
         {
             if(depth >= horizon)
                 break;//check if after last addition of children horizon is reached
 
-            for (Node child : tempChildren2)
-               tempChildren1.addAll(generateChildren(child, depth));
-               //generate children and add to temp list 1
+            System.out.println("\nDepth: " + depth + "\n");
+
+            for (Node child : tempChildren1) {
+                if(child.getParent() != root.getParent())
+                    System.out.println("Parent Node: " + child.getParent());
+                tempChildren2.addAll(generateChildren(child, depth));
+                System.out.println(child.toString());
+                //generate children and add to temp list 2
+            }
 
             if(depth >= horizon)
                 break;//again checking if horizon reached - e.g. odd number horizon
 
             depth++;
 
-            tempChildren2.clear();//clear out 2nd list so can add to it again
+            tempChildren1.clear();//clear out 1st list so can add to it again
 
-            for (Node child : tempChildren1)
-                tempChildren2.addAll(generateChildren(child, depth));
-                //generate children and add to temp list 2
+            System.out.println("\nDepth: " + depth + "\n");
 
+            for (Node child : tempChildren2) {
+                System.out.println("Parent Node: " + child.getParent());
+                tempChildren1.addAll(generateChildren(child, depth));
+                System.out.println(child.toString());
+                //generate children and add to temp list 1
+            }
            depth++;
 
-            tempChildren1.clear();//clear out list so can add to it again
+            tempChildren2.clear();//clear out 2nd list so can add to it again
         }
     }
 
