@@ -93,9 +93,9 @@ public class Tree {
 
     public void buildTree()
     {
-        int depth = 0; //want to reach the horizon
+        int depth = 0;//want to reach the horizon
 
-        root = new Node(null, generateValue());
+        root = new Node(null, value);
         //root node has random value between -2500,2500
 
         ArrayList<Node> tempChildren1 = new ArrayList<>();
@@ -107,15 +107,10 @@ public class Tree {
             if(depth >= horizon)
                 break;//check if after last addition of children horizon is reached
 
-            System.out.println("\nDepth: " + depth + "\n");
 
-            for (Node child : tempChildren1) {
-                if(child.getParent() != root.getParent())
-                    System.out.println("Parent Node: " + child.getParent());
+            for (Node child : tempChildren1)
                 tempChildren2.addAll(generateChildren(child, depth));
-                System.out.println(child.toString());
                 //generate children and add to temp list 2
-            }
 
             if(depth >= horizon)
                 break;//again checking if horizon reached - e.g. odd number horizon
@@ -124,25 +119,21 @@ public class Tree {
 
             tempChildren1.clear();//clear out 1st list so can add to it again
 
-            System.out.println("\nDepth: " + depth + "\n");
-
-            for (Node child : tempChildren2) {
-                System.out.println("Parent Node: " + child.getParent());
+            for (Node child : tempChildren2)
                 tempChildren1.addAll(generateChildren(child, depth));
-                System.out.println(child.toString());
                 //generate children and add to temp list 1
-            }
+
            depth++;
 
-            tempChildren2.clear();//clear out 2nd list so can add to it again
+           tempChildren2.clear();//clear out 2nd list so can add to it again
         }
     }
 
-    public int getApprox() {return approx;}
+    public int getApprox(){return approx;}
+
+    public int getHorizon(){return horizon;}
 
     public Node getRoot(){return root;}
 
-    public String nodeCount(){
-        return String.valueOf(nodeCount);
-    }
+    public String nodeCount(){return String.valueOf(nodeCount);}
 }

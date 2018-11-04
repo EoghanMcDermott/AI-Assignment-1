@@ -5,6 +5,7 @@ public class AlphaBeta {
     private Tree tree;
     private int alpha = -10000;
     private int beta = 10000;
+    private int count;
 
     public AlphaBeta(Tree tree)
     {
@@ -13,11 +14,12 @@ public class AlphaBeta {
 
     public int search(int val) {
 
-        int count = 0;//need to count number of evaluations
+        count = 0;//need to count number of evaluations
 
-        Node start = tree.getRoot();
 
-        return 0;
+        ab(tree.getRoot(), tree.getHorizon(), alpha, beta);
+
+        return count;
     }
 
     private int ab(Node node, int ht, int achievable, int hope)
@@ -29,6 +31,8 @@ public class AlphaBeta {
         {
             for(Node child: node.getChildren())
             {
+                count++;
+
                 int temp = -1* ab(child, ht-1,-1*hope, -1*achievable);
 
                 if(temp >= hope)
