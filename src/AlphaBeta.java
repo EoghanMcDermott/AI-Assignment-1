@@ -22,7 +22,7 @@ public class AlphaBeta {
         return count;
     }
 
-    private int ab(Node node, int ht, int achievable, int hope)
+    private int ab(Node node, int ht, int ach, int hope)
     {
         if(ht == 0 || node.hasChildren() == false)
         //if no children then no moves available
@@ -33,15 +33,15 @@ public class AlphaBeta {
             {
                 count++;
 
-                int temp = -1* ab(child, ht-1,-1*hope, -1*achievable);
+                int temp = -1* ab(child, ht-1,-1*hope,-1*ach);
 
                 if(temp >= hope)
                     return temp;//beta cutoff
 
-                achievable = Integer.max(temp,achievable);
+                ach = Integer.max(temp,ach);
             }
         }
 
-        return achievable;
+        return ach;
     }
 }

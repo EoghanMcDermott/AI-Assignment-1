@@ -21,7 +21,8 @@ import java.util.ArrayList;
 public class Node {
 
     private Node parent;
-    private ArrayList<Node> children;//using a list so can vary the branching factor of tree
+    private ArrayList<Node> children;
+    //using a list so can vary the branching factor of tree
     private int value;
     private boolean interesting = false;
 
@@ -52,15 +53,6 @@ public class Node {
         for(Node newChild: children)
             this.children.add(newChild);
     }
-
-//    public int getHeight(){//recursive function to get a node's height in a tree
-//        int height = 0;
-//
-//        if(getParent() == null)
-//            return height;
-//        else
-//            return 1 + parent.getHeight();
-//    }//do i need this?
 
     public boolean isInteresting() { return interesting; }
 

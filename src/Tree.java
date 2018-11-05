@@ -1,6 +1,7 @@
 //Eoghan McDermott - 15345451
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
@@ -90,13 +91,18 @@ public class Tree {
             n.makeInteresting();
     }
 
+    private int generateApprox()
+    {
+      return (random.nextInt(2*approx + 1)-approx);
+    }//generate random number in range -approx, approx
+
 
     public void buildTree()
     {
         int depth = 0;//want to reach the horizon
 
         root = new Node(null, value);
-        //root node has random value between -2500,2500
+        //root node has desired value - it's what we want to find
 
         ArrayList<Node> tempChildren1 = new ArrayList<>();
         ArrayList<Node> tempChildren2 = new ArrayList<>();
@@ -127,7 +133,88 @@ public class Tree {
 
            tempChildren2.clear();//clear out 2nd list so can add to it again
         }
+
+        addNoise();
     }
+
+    private void addNoise()
+    {
+        int depth = 0;//want to reach the horizon
+
+        ArrayList<Node> tempChildren1 = new ArrayList<>();
+        ArrayList<Node> tempChildren2 = new ArrayList<>();
+        tempChildren1.add(root);//2nd temp contains just root node initially
+
+        while(depth != horizon)
+        {
+            if(depth >= horizon)
+                break;//check if after last addition of children horizon is reached
+
+
+            for (Node child : tempChildren1)
+                tempChildren2.addAll(child.getChildren());
+            //generate children and add to temp list 2
+
+            if(depth >= horizon)
+                break;//again checking if horizon reached - e.g. odd number horizon
+
+            depth++;
+
+            tempChildren1.clear();//clear out 1st list so can add to it again
+
+            for (Node child : tempChildren2)
+                tempChildren1.addAll(child.getChildren());
+            //generate children and add to temp list 1
+
+            depth++;
+
+            tempChildren2.clear();//clear out 2nd list so can add to it again
+        }
+
+        //want to reach the level of leaf nodes
+        //so now either temp list 1 or 2 contains all leaf nodes
+        //biggest list is the one that contains leaf nodes
+
+        ArrayList<Node> temp;
+        if(tempChildren1.size() > tempChildren2.size())
+            temp = tempChildren1;
+        else
+            temp = tempChildren2;
+
+        tempChildren1.clear();
+        tempChildren2.clear();//just clearing out both lists so can start fresh
+
+        tempChildren1 = temp;
+
+        while(depth > 0)//working back up the tree now
+        {
+            if(depth == 1)
+                break;//stop before root node
+
+            for (Node n : tempChildren1)
+            {
+                tempChildren2.add(n.getParent());//keep track of parent nodes
+                if(n.hasChildren() == true)//add noise if not a leaf node
+                    n.setValue(n.getValue() + generateApprox());//update values
+
+            }
+            //now have list of all parent nodes - need to add some noise
+
+            depth--;//reduce depth as we move back up the tree
+            tempChildren1.clear();
+
+            if(depth == 1)
+                break;//stop before root node
+
+            for (Node n : tempChildren2) {
+                n.setValue(n.getValue() + generateApprox());//update values
+                tempChildren1.add(n.getParent());//keep track of parent nodes
+            }
+            depth--;//reduce depth as we move back up the tree
+            tempChildren2.clear();
+        }
+    }
+
 
     public int getApprox(){return approx;}
 
