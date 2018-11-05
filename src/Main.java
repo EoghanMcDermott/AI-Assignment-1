@@ -1,3 +1,7 @@
+//Eoghan McDermott - 15345451
+
+import java.util.Random;
+
 public class Main {
 
     public static void main(String[] args)
@@ -5,23 +9,26 @@ public class Main {
         Tree[] trees = new Tree[12];
         for(Tree t: trees)
         {
-            t = new Tree(3, 4, 20, 100, 20);
+            Random random = new Random();
+            int val = random.nextInt(5001)-2500;
+            //random int in range -2500,2500
+            t = new Tree(11, 7, val, 100, 20);
             t.buildTree();
+
             AlphaBeta ab = new AlphaBeta(t);
-            int eval = ab.search(20);
-            System.out.println("Total Eval: " + eval);
+
+            String str = "";
+            int eval = ab.search(20,0);//search to depth h
+            str += "Evals at h: " +  String.valueOf(eval);
+
+            int eval_h1 = ab.search(20,1);//search to depth h-1
+            str+="\t\t" + "Evals at h-1: " +  String.valueOf(eval_h1);
+
+            int eval_h2 = ab.search(20,2);//search to depth h-2
+            str+= "\t\t" + "Evals at h-2: " + String.valueOf(eval_h2);
+
+            System.out.println(str);
         }
 
-        //System.out.println("Total Nodes: " + t.nodeCount());
-//        AlphaBeta ab = new AlphaBeta();
-//        Quiescence q = new Quiescence();
-//
-//        int eval = ab.search(20);
-//        int q_eval = q.search(20);
-//
-//        System.out.println("Total Nodes: " + t.nodeCount());
-//
-//        System.out.println("Total Eval: " + eval);
-//        System.out.println("Total Quiescence Eval: " + q_eval);
     }
 }

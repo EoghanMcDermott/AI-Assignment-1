@@ -100,6 +100,7 @@ public class Tree {
     public void buildTree()
     {
         int depth = 0;//want to reach the horizon
+        int chance;
 
         root = new Node(null, value);
         //root node has desired value - it's what we want to find
@@ -115,9 +116,13 @@ public class Tree {
 
 
             for (Node child : tempChildren1)
-                tempChildren2.addAll(generateChildren(child, depth));
-                //generate children and add to temp list 2
-
+            {
+                chance = random.nextInt(10);
+                //10% chance to not give a node daughter nodes - non-uniform depth
+                if(chance != 1)
+                    tempChildren2.addAll(generateChildren(child, depth));
+                    //generate children and add to temp list 2
+            }
             if(depth >= horizon)
                 break;//again checking if horizon reached - e.g. odd number horizon
 
@@ -126,8 +131,13 @@ public class Tree {
             tempChildren1.clear();//clear out 1st list so can add to it again
 
             for (Node child : tempChildren2)
-                tempChildren1.addAll(generateChildren(child, depth));
-                //generate children and add to temp list 1
+            {
+                chance = random.nextInt(10);
+                //10% chance to not give a node daughter nodes - non-uniform depth
+                if(chance != 1)
+                    tempChildren1.addAll(generateChildren(child, depth));
+                    //generate children and add to temp list 1
+            }
 
            depth++;
 
@@ -185,17 +195,19 @@ public class Tree {
         tempChildren2.clear();//just clearing out both lists so can start fresh
 
         tempChildren1 = temp;
+        int approxVal;
 
         while(depth > 0)//working back up the tree now
         {
             if(depth == 1)
                 break;//stop before root node
 
+            approxVal = generateApprox();
             for (Node n : tempChildren1)
             {
                 tempChildren2.add(n.getParent());//keep track of parent nodes
                 if(n.hasChildren() == true)//add noise if not a leaf node
-                    n.setValue(n.getValue() + generateApprox());//update values
+                    n.setValue(n.getValue() + approxVal);//update values
 
             }
             //now have list of all parent nodes - need to add some noise
@@ -206,8 +218,9 @@ public class Tree {
             if(depth == 1)
                 break;//stop before root node
 
+            approxVal = generateApprox();
             for (Node n : tempChildren2) {
-                n.setValue(n.getValue() + generateApprox());//update values
+                n.setValue(n.getValue() + approxVal);//update values
                 tempChildren1.add(n.getParent());//keep track of parent nodes
             }
             depth--;//reduce depth as we move back up the tree

@@ -12,12 +12,13 @@ public class AlphaBeta {
         this.tree = tree;
     }
 
-    public int search(int val) {
+    public int search(int val,int h) {
+        //will use h to specify if we want to search to depth h, h-1, or h-2
 
         count = 0;//need to count number of evaluations
 
 
-        ab(tree.getRoot(), tree.getHorizon(), alpha, beta);
+        ab(tree.getRoot(), tree.getHorizon()-h, alpha, beta);
 
         return count;
     }
